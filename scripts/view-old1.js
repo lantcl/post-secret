@@ -2,8 +2,6 @@ var app = function(app){  //module pattern
 	app.makeView = function(m, stage){
 		const v = {};
 		
-		var labelColors = ["#91193D","#788970","#64163A","#47163A","#301B2D"];
-
 		const manager = v.manager = new Manager();
 
 		var stageW = stage.width;
@@ -126,9 +124,8 @@ var app = function(app){  //module pattern
 		////////////PAGE 4/////// create and post the secret
 		
 		const page4 = v.page4 = new Container(stageW, stageH);
-		
+
 		let header4 = new Container().addTo(page4);
-		
 		let instruction2 = new Label({
 			text: "use the space bar to add spacing",
 			font: "courier",
@@ -136,89 +133,10 @@ var app = function(app){  //module pattern
 		}).addTo(header4);
 		
 		let content4 = new Container(300,300).addTo(page4);
-		////ransom//////
-		var label;
-
-    	var letterBox = new Container().addTo(content4);
-
-    	function createLetter(letter){
-        label = new Label({
-            text: letter,
-            size: rand(30, 60),
-            color: "white",
-            font: "courier",
-            backgroundColor: labelColors[rand(labelColors.length-1)],
-            fontOptions:"italic bold"
-        }).centerReg(letterBox).rot(rand(-7, 7));
-    	}
-		
-		frame.on("keydown", function(e){
-        if (e.keyCode == 8 || e.keyCode == 46){
-            letterBox.removeChildAt(letterBox.numChildren -1);
-            stage.update();
-        }
-        else if (e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 20){
-            // zog("do NOTHING");
-        }
-        else if (e.keyCode == 32){
-            new Rectangle(50,50).alp(0).addTo(letterBox);
-            stage.update();
-        } else {
-             
-            createLetter(event.key);
-
-            if (letterBox.numChildren >= 20){
-                label.pos(70*(letterBox.numChildren-20),200);
-                stage.update();
-            } else if (letterBox.numChildren >= 10){
-                label.pos(70*(letterBox.numChildren-9),100);
-                stage.update();
-            } else {
-                label.loc(70*letterBox.numChildren);
-                stage.update();
-            }
-        
-        }
-    	});
-    	
-		////speech bubbles//////
-		var speechBubble1 = new Label({
-        	text:"", 
-        	backgroundColor:white,
-        	corner: 10,
-        	color: "#91193D"
-	    }).center(content4);
-
-	    var speechBubble2 = new Label({
-	        text:"", 
-	        backgroundColor:white,
-	        corner: 10,
-	        color: "#91193D"
-	    }).center(content4);
-		
-		/////keyboard///////
-		var keyboard = new Keyboard({
-        	backgroundColor:"#91193D",
-        	corner:45,
-        	shadowColor: -1,
-       		labels:[speechBubble1,speechBubble2]
-    	});
-
-    	var text1Event = speechBubble1.on("mousedown", activate);
-	    var text2Event = speechBubble2.on("mousedown", activate);
-	    
-	    function activate(e) {
-	        keyboard.show();
-	        speechBubble1.off("mousedown", text1Event);
-	        speechBubble2.off("mousedown", text2Event);
-	    }
-	    keyboard.on("close", function() {
-	        speechBubble1.on("mousedown", text1Event);
-	        speechBubble2.on("mousedown", text2Event);
-	    });
-
-		
 		// create elements based on the button clicked instead of two different pages 
+		//bubble 
+
+		//ransom
 
 		if (1==1) layout4 = new Layout(page4, [
 			{object: header4, marginTop:5,  maxWidth: 90,},
