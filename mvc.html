@@ -31,10 +31,13 @@
 var scaling = "full"; // this will resize to fit inside the screen dimensions
 var width = 1024;
 var height = 768;
-var color = light; // ZIM colors like green, blue, pink, faint, clear, etc.
+var color = "#3E303B"; // ZIM colors like green, blue, pink, faint, clear, etc.
 var outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
+var path = "assets/"
+var assets = ["logo.png", "page2-header.png","bg-test.jpg"]
+//var frame = new Frame(scaling, width, height, color, outerColor);
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path);
 
-var frame = new Frame(scaling, width, height, color, outerColor);
 frame.on("ready", function() {
     zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
 
