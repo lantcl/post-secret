@@ -79,10 +79,15 @@ var app = function(app){  //module pattern
 		
 		const layout2 = new Layout(page2, [
 			{object: header2, marginTop:5,  maxWidth: 90,},
-			{object: content2, marginTop:2},
+			{object: content2, marginTop:2, backgroundColor:"darkslategrey"},
 			{object: footer2, marginTop:2,  maxWidth: 90}
 			], 2, "#3E303B", true, null, stage);
 
+		let messageColors = series("floralwhite", "ghostwhite","whitesmoke","linen","antiquewhite","mintcream");
+
+		for (var i =0; i<10; i++){
+			new Rectangle(60,100, messageColors()).center(content2).rot(rand(-7, 7)).mov(rand(-220, 220),rand(-100, 100));
+		}
 
 		manager.add(layout2);
 		
@@ -302,10 +307,10 @@ var app = function(app){  //module pattern
             createLetter(event.key);
 
             if (letterBox.numChildren >= 20){
-                label.pos(30*(letterBox.numChildren-20),100);
+                label.pos(30*(letterBox.numChildren-19),100);
                 stage.update();
             } else if (letterBox.numChildren >= 10){
-                label.pos(30*(letterBox.numChildren-9),50);
+                label.pos(30*(letterBox.numChildren-10),50);
                 stage.update();
             } else {
                 label.loc(30*letterBox.numChildren);
@@ -316,9 +321,9 @@ var app = function(app){  //module pattern
     	});
 
 		layout5 = new Layout(page5, [
-			{object: header5, marginTop:5,  maxWidth: 90,},
+			{object: header5, marginTop:5, maxWidth: 90,},
 			{object: controls5, maxWidth: 90},
-			{object: content5, marginTop:2},
+			{object: content5, marginTop:2,  maxWidth: 90},
 			], 2, "#3E303B", true, null, stage);
 
 		manager.add(layout5);
