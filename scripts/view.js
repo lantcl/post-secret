@@ -42,7 +42,6 @@ var app = function(app){  //module pattern
 		
 		let startButton = v.page1.button = new Button({
 			label: "enter",
-			size: 10,
 			corner: 2,
 			width: 150,
 			height: 50
@@ -64,16 +63,14 @@ var app = function(app){  //module pattern
 		let logo2 = v.page2.logo = frame.asset("page2-header.png").addTo(header2);
 		let content2 = new Container(300,300).addTo(page2);
 		
-		//var bg = frame.asset("bg-test.jpg").addTo(content);
-		
 		let footer2 = v.page2.tabs = new Tabs({
 			tabs:[new Button({
 				icon: pizzazz.makeIcon("home", "white").sca(.5),
 				rollIcon: pizzazz.makeIcon("home", "white").sca(.6)
 			}), 
 			new Button({
-				icon: pizzazz.makeIcon("plus", "white").sca(.5),
-				rollIcon: pizzazz.makeIcon("plus", "white").sca(.6)
+				icon: pizzazz.makeIcon("close", "white").sca(.5).rot(45),
+				rollIcon: pizzazz.makeIcon("close", "white").sca(.6).rot(45)
 			})
 			]
 		}).addTo(page2);
@@ -97,9 +94,12 @@ var app = function(app){  //module pattern
 			font: "courier",
 			color: white
 		}).addTo(header3);
+		
 		let content3 = new Container(300,300).addTo(page3);
 		
-		var bg = frame.asset("bg-test.jpg").centerReg(page3).sca(.2);
+		var bubbleBox = v.page3.bubbleSecret = new Rectangle(100, 170, "white").centerReg(content3).mov(-60);
+		var ransomBox = v.page3.ransomSecret = new Rectangle(100, 170, "white").centerReg(content3).mov(60);
+		//var bg = frame.asset("bg-test.jpg").centerReg(page3).sca(.2);
 		
 		let footer3 = v.page3.tabs = new Tabs({
 			tabs:[new Button({
@@ -111,7 +111,7 @@ var app = function(app){  //module pattern
 				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
 			})
 			]
-		}).addTo(content3);
+		}).addTo(page3);
 		
 		const layout3 = new Layout(page3, [
 			{object: header3, marginTop:5,  maxWidth: 90,},
@@ -123,12 +123,17 @@ var app = function(app){  //module pattern
 		manager.add(layout3);
 		
 
-		////////////PAGE 4/////// create and post the secret
+		////////////PAGE 4/////// bubble secret
 		
 		const page4 = v.page4 = new Container(stageW, stageH);
 		
 		let header4 = new Container().addTo(page4);
 		
+		let closeButton = v.page4.close = new Button({
+				icon: pizzazz.makeIcon("close", "white").sca(.5),
+				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
+			}).addTo(header4);
+
 		let instruction2 = new Label({
 			text: "use the space bar to add spacing",
 			font: "courier",
@@ -136,10 +141,74 @@ var app = function(app){  //module pattern
 		}).addTo(header4);
 		
 		let content4 = new Container(300,300).addTo(page4);
-		////ransom//////
-		var label;
+		
+    	
+		//speech bubbles//////
+		var speechBubble1 = new Label({
+        	text:"", 
+        	backgroundColor:white,
+        	corner: 10,
+        	color: "#91193D"
+	    }).center(content4);
 
-    	var letterBox = new Container().addTo(content4);
+	    var speechBubble2 = new Label({
+	        text:"", 
+	        backgroundColor:white,
+	        corner: 10,
+	        color: "#91193D"
+	    }).center(content4);
+		
+		/////keyboard///////
+		var keyboard = new Keyboard({
+        	backgroundColor:"#91193D",
+        	corner:45,
+        	shadowColor: -1,
+       		labels:[speechBubble1,speechBubble2]
+    	});
+
+    	var text1Event = speechBubble1.on("mousedown", activate);
+	    var text2Event = speechBubble2.on("mousedown", activate);
+	    
+	    function activate(e) {
+	        keyboard.show();
+	        speechBubble1.off("mousedown", text1Event);
+	        speechBubble2.off("mousedown", text2Event);
+	    }
+	    keyboard.on("close", function() {
+	        speechBubble1.on("mousedown", text1Event);
+	        speechBubble2.on("mousedown", text2Event);
+	    });
+
+
+		const layout4 = new Layout(page4, [
+			{object: header4, marginTop:5,  maxWidth: 90},
+			{object: content4, marginTop:2}
+			], 2, "#3E303B", true, null, stage);
+
+
+		manager.add(layout4);
+
+		//////////PAGE 5/////// ransom secret
+		//ransom//////
+
+		const page5 = v.page5 = new Container(stageW, stageH);
+		
+		let header5 = new Container().addTo(page5);
+		
+		closeButton = v.page5.close = new Button({
+				icon: pizzazz.makeIcon("close", "white").sca(.5),
+				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
+			}).addTo(header5);
+
+		let instruction3 = new Label({
+			text: "use the space bar to add spacing",
+			font: "courier",
+			color: white
+		}).addTo(header5);
+		
+		let content5 = new Container(300,300).addTo(page5);
+
+    	var letterBox = new Container().addTo(content5);
 
     	function createLetter(letter){
         label = new Label({
@@ -180,66 +249,20 @@ var app = function(app){  //module pattern
         
         }
     	});
-    	
-		////speech bubbles//////
-		var speechBubble1 = new Label({
-        	text:"", 
-        	backgroundColor:white,
-        	corner: 10,
-        	color: "#91193D"
-	    }).center(content4);
 
-	    var speechBubble2 = new Label({
-	        text:"", 
-	        backgroundColor:white,
-	        corner: 10,
-	        color: "#91193D"
-	    }).center(content4);
-		
-		/////keyboard///////
-		var keyboard = new Keyboard({
-        	backgroundColor:"#91193D",
-        	corner:45,
-        	shadowColor: -1,
-       		labels:[speechBubble1,speechBubble2]
-    	});
-
-    	var text1Event = speechBubble1.on("mousedown", activate);
-	    var text2Event = speechBubble2.on("mousedown", activate);
-	    
-	    function activate(e) {
-	        keyboard.show();
-	        speechBubble1.off("mousedown", text1Event);
-	        speechBubble2.off("mousedown", text2Event);
-	    }
-	    keyboard.on("close", function() {
-	        speechBubble1.on("mousedown", text1Event);
-	        speechBubble2.on("mousedown", text2Event);
-	    });
-
-		
-		// create elements based on the button clicked instead of two different pages 
-
-		if (1==1) layout4 = new Layout(page4, [
-			{object: header4, marginTop:5,  maxWidth: 90,},
-			{object: content4, marginTop:2},
-			// {object: footer4, marginTop:2,  maxWidth: 90}
+		layout5 = new Layout(page5, [
+			{object: header5, marginTop:5,  maxWidth: 90,},
+			{object: content5, marginTop:2},
 			], 2, "#3E303B", true, null, stage);
 
-		layout4= new Layout(page4, [
-			{object: header4, marginTop:5,  maxWidth: 90,},
-			{object: content4, marginTop:2},
-			// {object: footer4, marginTop:2,  maxWidth: 90}
-			], 2, "#3E303B", true, null, stage);
-
-
-		manager.add(layout4);
+		manager.add(layout5);
 
 		v.pages = new Pages([
 			{page:page1, swipe:[null, null, page1, page2]},
 			{page:page2, swipe:[null, null, page1, page3]},
-			{page:page3, swipe:[null, null, page2, page4]},
-			{page:page4, swipe:[null, null, page3, page4]}
+			{page:page3, swipe:[null, null, page2, page3]},
+			{page:page4},
+			{page:page5},
 			], "slide", 500).addTo();
 		
 		manager.add(v.pages);
