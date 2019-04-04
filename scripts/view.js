@@ -63,7 +63,9 @@ var app = function(app){  //module pattern
 		let logo2 = v.page2.logo = frame.asset("page2-header.png").addTo(header2);
 		let content2 = new Container(300,300).addTo(page2);
 		
-		let footer2 = v.page2.tabs = new Tabs({
+		let footer2 = new Container(300,100).addTo(page2); 
+
+		v.page2.tabs = new Tabs({
 			tabs:[new Button({
 				icon: pizzazz.makeIcon("home", "white").sca(.5),
 				rollIcon: pizzazz.makeIcon("home", "white").sca(.6)
@@ -73,7 +75,7 @@ var app = function(app){  //module pattern
 				rollIcon: pizzazz.makeIcon("close", "white").sca(.6).rot(45)
 			})
 			]
-		}).addTo(page2);
+		}).center(footer2);
 		
 		const layout2 = new Layout(page2, [
 			{object: header2, marginTop:5,  maxWidth: 90,},
@@ -101,22 +103,17 @@ var app = function(app){  //module pattern
 		var ransomBox = v.page3.ransomSecret = new Rectangle(100, 170, "white").centerReg(content3).mov(60);
 		//var bg = frame.asset("bg-test.jpg").centerReg(page3).sca(.2);
 		
-		let footer3 = v.page3.tabs = new Tabs({
-			tabs:[new Button({
+		let footer3 =  new Container(300,100).addTo(page3);
+		let home = v.page3.home = new Button({
 				icon: pizzazz.makeIcon("home", "white").sca(.5),
 				rollIcon: pizzazz.makeIcon("home", "white").sca(.6)
-			}), 
-			new Button({
-				icon: pizzazz.makeIcon("close", "white").sca(.5),
-				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
-			})
-			]
-		}).addTo(page3);
+			}).centerReg(footer3);
+		
 		
 		const layout3 = new Layout(page3, [
 			{object: header3, marginTop:5,  maxWidth: 90,},
 			{object: content3, marginTop:2},
-			{object: footer3, marginTop:2,  maxWidth: 90}
+			{object: footer3, marginTop:2, maxWidth: 90}
 			], 2, "#3E303B", true, null, stage);
 
 
@@ -128,18 +125,57 @@ var app = function(app){  //module pattern
 		const page4 = v.page4 = new Container(stageW, stageH);
 		
 		let header4 = new Container().addTo(page4);
-		
-		let closeButton = v.page4.close = new Button({
-				icon: pizzazz.makeIcon("close", "white").sca(.5),
-				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
-			}).addTo(header4);
+		let controls4 = new Container().addTo(page4);
 
-		let instruction2 = new Label({
-			text: "use the space bar to add spacing",
+		let instruction21 = new Label({
+			text: "type a message",
 			font: "courier",
 			color: white
-		}).addTo(header4);
+		}).addTo(header4).alp(.3);
+
+		let instruction2 = new Label({
+			text: "click a bubble to type in it",
+			font: "courier",
+			color: white
+		}).addTo(header4).alp(.3).mov(null, 60);
 		
+		let closeButton = v.page4.close = new Button({
+				backgroundColor: "#91193D",
+				rollBackgroundColor:"#47163A",
+				icon: pizzazz.makeIcon("close", "white").sca(.5),
+				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
+			}).addTo(header4).pos(0,0,true);
+
+		var save = new Label({
+		   text:"save",
+		   size:20,
+		   font: "courier",
+		   color: "white"
+		});
+		var background = new Label({
+		   text:"background",
+		   size:20,
+		   font: "courier",
+		   color: "white"
+		});
+
+		let controls = v.controls = new Tabs({
+			tabs:[
+			new Button({
+				label: background,
+				corner: 2,
+				width: 150,
+				height: 50
+				}),
+			new Button({
+				label: save,
+				corner: 2,
+				width: 150,
+				height: 50
+				}),
+			]
+		}).addTo(controls4).mov(null, 40);
+
 		let content4 = new Container(300,300).addTo(page4);
 		
     	
@@ -148,40 +184,58 @@ var app = function(app){  //module pattern
         	text:"", 
         	backgroundColor:white,
         	corner: 10,
+        	size:20,
+        	align: "center",
         	color: "#91193D"
-	    }).center(content4);
+	    }).center(content4).mov(null, -150);
 
 	    var speechBubble2 = new Label({
 	        text:"", 
+	        size:20,
+	        align: "center",
 	        backgroundColor:white,
 	        corner: 10,
 	        color: "#91193D"
-	    }).center(content4);
+	    }).center(content4).mov(null, -100);
 		
+		var speechBubble3 = new Label({
+	        text:"", 
+	        size:20,
+	        align: "center",
+	        backgroundColor:white,
+	        corner: 10,
+	        color: "#91193D"
+	    }).center(content4).mov(null, -50);
+
 		/////keyboard///////
 		var keyboard = new Keyboard({
         	backgroundColor:"#91193D",
-        	corner:45,
+        	corner:0,
         	shadowColor: -1,
-       		labels:[speechBubble1,speechBubble2]
-    	});
+        	place: false,
+       		labels:[speechBubble1,speechBubble2, speechBubble3]
+    	}).addTo(page4).hide();
 
     	var text1Event = speechBubble1.on("mousedown", activate);
 	    var text2Event = speechBubble2.on("mousedown", activate);
+	    var text3Event = speechBubble3.on("mousedown", activate);
 	    
 	    function activate(e) {
 	        keyboard.show();
 	        speechBubble1.off("mousedown", text1Event);
 	        speechBubble2.off("mousedown", text2Event);
+	        speechBubble3.off("mousedown", text3Event);
 	    }
 	    keyboard.on("close", function() {
 	        speechBubble1.on("mousedown", text1Event);
 	        speechBubble2.on("mousedown", text2Event);
+	        speechBubble3.on("mousedown", text3Event);
 	    });
 
 
 		const layout4 = new Layout(page4, [
 			{object: header4, marginTop:5,  maxWidth: 90},
+			{object: controls4, maxWidth: 90},
 			{object: content4, marginTop:2}
 			], 2, "#3E303B", true, null, stage);
 
@@ -194,17 +248,28 @@ var app = function(app){  //module pattern
 		const page5 = v.page5 = new Container(stageW, stageH);
 		
 		let header5 = new Container().addTo(page5);
+		let controls5 = new Container().addTo(page5);
 		
-		closeButton = v.page5.close = new Button({
-				icon: pizzazz.makeIcon("close", "white").sca(.5),
-				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
-			}).addTo(header5);
-
-		let instruction3 = new Label({
-			text: "use the space bar to add spacing",
+		let instruction31 = new Label({
+			text: "type a message",
 			font: "courier",
 			color: white
-		}).addTo(header5);
+		}).addTo(header5).alp(.3);
+
+		let instruction3 = new Label({
+			text: "use the space bar to fix gaps",
+			font: "courier",
+			color: white
+		}).addTo(header5).mov(null, 60).alp(.3);
+
+		controls.clone().addTo(controls5);
+
+		closeButton = v.page5.close = new Button({
+				backgroundColor: "#91193D",
+				rollBackgroundColor:"#47163A",
+				icon: pizzazz.makeIcon("close", "white").sca(.5),
+				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
+			}).addTo(header5).pos(0,0,true);
 		
 		let content5 = new Container(300,300).addTo(page5);
 
@@ -213,7 +278,7 @@ var app = function(app){  //module pattern
     	function createLetter(letter){
         label = new Label({
             text: letter,
-            size: rand(30, 60),
+            size: rand(12, 20),
             color: "white",
             font: "courier",
             backgroundColor: labelColors[rand(labelColors.length-1)],
@@ -230,20 +295,20 @@ var app = function(app){  //module pattern
             // zog("do NOTHING");
         }
         else if (e.keyCode == 32){
-            new Rectangle(50,50).alp(0).addTo(letterBox);
+            new Rectangle(20,20).alp(0).addTo(letterBox);
             stage.update();
         } else {
              
             createLetter(event.key);
 
             if (letterBox.numChildren >= 20){
-                label.pos(70*(letterBox.numChildren-20),200);
+                label.pos(30*(letterBox.numChildren-20),100);
                 stage.update();
             } else if (letterBox.numChildren >= 10){
-                label.pos(70*(letterBox.numChildren-9),100);
+                label.pos(30*(letterBox.numChildren-9),50);
                 stage.update();
             } else {
-                label.loc(70*letterBox.numChildren);
+                label.loc(30*letterBox.numChildren);
                 stage.update();
             }
         
@@ -252,6 +317,7 @@ var app = function(app){  //module pattern
 
 		layout5 = new Layout(page5, [
 			{object: header5, marginTop:5,  maxWidth: 90,},
+			{object: controls5, maxWidth: 90},
 			{object: content5, marginTop:2},
 			], 2, "#3E303B", true, null, stage);
 
