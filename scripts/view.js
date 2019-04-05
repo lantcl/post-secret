@@ -12,7 +12,6 @@ var app = function(app){  //module pattern
 		STYLE = {
 			type:{
 				Tabs:{
-					currentSelected: false,
 					width: 160,
 					spacing: 20
 				},
@@ -29,7 +28,17 @@ var app = function(app){  //module pattern
 			}
 		}
 		
-	 
+		//let imgs = ["bg1.jpg","bg2.jpg","bg3.jpg","bg4.jpg","bg5.jpg"];
+		// let imgs = ["bg1.jpg","bg2.jpg"];
+		// frame.asset("bg2.jpg").sca(.2).alp(.7).addTo(page4);
+		// frame.asset("bg1.jpg").sca(.2).alp(.7).addTo(page4);
+
+	 // 	function changeBackground(page){
+	 // 		// bg.removeFrom();
+	 // 		let currentbg = imgs[rand(imgs.length-1)];
+	 // 		frame.asset(currentbg).top();
+	 // 		stage.update();
+	 // 	}
 		
 		////////////PAGE 1///////
 		const page1 = v.page1 = new Container(stageW, stageH);
@@ -85,8 +94,8 @@ var app = function(app){  //module pattern
 
 		let messageColors = series("floralwhite", "ghostwhite","whitesmoke","linen","antiquewhite","mintcream");
 
-		for (var i =0; i<10; i++){
-			new Rectangle(60,100, messageColors()).center(content2).rot(rand(-7, 7)).mov(rand(-220, 220),rand(-100, 100));
+		for (var i =0; i<5; i++){
+			new Rectangle(60,100, messageColors()).center(content2).rot(rand(-7, 7)).mov(rand(-180, 180),rand(-100, 100));
 		}
 
 		manager.add(layout2);
@@ -128,41 +137,64 @@ var app = function(app){  //module pattern
 		////////////PAGE 4/////// bubble secret
 		
 		const page4 = v.page4 = new Container(stageW, stageH);
+		const bgContainer = new Container(stageW, stageH).addTo(page4);
 		
-		let header4 = new Container().addTo(page4);
+		let content4 = new Container(300,300).addTo(page4);
+		
+		// bg.addTo(page4);
+		let imgs = ["bg1.jpg","bg2.jpg","bg3.jpg","bg4.jpg","bg5.jpg"];
+		let bgseries = series(imgs);
+
+		for(var i =0; i<imgs.length; i++){
+			frame.asset(imgs[i]).sca(.2).alp(1).centerReg(bgContainer);
+		}
+
+	 	function changeBackground(page){
+	 		// bg.removeFrom();
+	 		let currentbg = bgseries();
+	 		zog(currentbg);
+	 		frame.asset(currentbg).top();
+	 		stage.update();
+	 	}
+		
+
+		let footer4 = new Container().addTo(page4);
 		let controls4 = new Container().addTo(page4);
 
 		let instruction21 = new Label({
 			text: "type a message",
 			font: "courier",
-			color: white
-		}).addTo(header4).alp(.3);
+			color: white,
+			backgroundColor: "#91193D"
+		}).addTo(footer4);
 
 		let instruction2 = new Label({
 			text: "click a bubble to type in it",
 			font: "courier",
-			color: white
-		}).addTo(header4).alp(.3).mov(null, 60);
+			color: white,
+			backgroundColor: "#91193D"
+		}).addTo(footer4).mov(null, 60);
 		
-		let closeButton = v.page4.close = new Button({
-				backgroundColor: "#91193D",
-				rollBackgroundColor:"#47163A",
-				icon: pizzazz.makeIcon("close", "white").sca(.5),
-				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
-			}).addTo(header4).pos(0,0,true);
+		// let closeButton = v.page4.close = new Button({
+		// 		backgroundColor: "#91193D",
+		// 		rollBackgroundColor:"#47163A",
+		// 		icon: pizzazz.makeIcon("close", "white").sca(.5),
+		// 		rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
+		// 	}).addTo(controls4);
 
 		var save = new Label({
 		   text:"save",
 		   size:20,
 		   font: "courier",
-		   color: "white"
+		   color: "white",
 		});
 		var background = new Label({
 		   text:"background",
 		   size:20,
 		   font: "courier",
-		   color: "white"
+		   color: "white",
 		});
+		
 
 		let controls = v.controls = new Tabs({
 			tabs:[
@@ -170,20 +202,34 @@ var app = function(app){  //module pattern
 				label: background,
 				corner: 2,
 				width: 150,
-				height: 50
+				height: 50,
 				}),
 			new Button({
 				label: save,
 				corner: 2,
 				width: 150,
-				height: 50
+				height: 50,
 				}),
+			new Button({
+				backgroundColor: "#91193D",
+				rollBackgroundColor:"#47163A",
+				icon: pizzazz.makeIcon("close", "white").sca(.5),
+				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
+				})
 			]
-		}).addTo(controls4).mov(null, 40);
+		}).addTo(controls4);
 
-		let content4 = new Container(300,300).addTo(page4);
-		
+		controls.on("mousedown", function(){
+					changeBackground(page4);
+				});		
     	
+    	let bubbleimg = new Rectangle({
+    		color:"white",
+    		corner: 25,
+    		width: 200, 
+    		height:200
+    		}).centerReg(content4);
+
 		//speech bubbles//////
 		var speechBubble1 = new Label({
         	text:"", 
@@ -192,7 +238,7 @@ var app = function(app){  //module pattern
         	size:20,
         	align: "center",
         	color: "#91193D"
-	    }).center(content4).mov(null, -150);
+	    }).center(content4).mov(null, -50);
 
 	    var speechBubble2 = new Label({
 	        text:"", 
@@ -201,7 +247,7 @@ var app = function(app){  //module pattern
 	        backgroundColor:white,
 	        corner: 10,
 	        color: "#91193D"
-	    }).center(content4).mov(null, -100);
+	    }).center(content4);
 		
 		var speechBubble3 = new Label({
 	        text:"", 
@@ -219,7 +265,7 @@ var app = function(app){  //module pattern
         	shadowColor: -1,
         	place: false,
        		labels:[speechBubble1,speechBubble2, speechBubble3]
-    	}).addTo(page4).hide();
+    	});
 
     	var text1Event = speechBubble1.on("mousedown", activate);
 	    var text2Event = speechBubble2.on("mousedown", activate);
@@ -239,9 +285,9 @@ var app = function(app){  //module pattern
 
 
 		const layout4 = new Layout(page4, [
-			{object: header4, marginTop:5,  maxWidth: 90},
-			{object: controls4, maxWidth: 90},
-			{object: content4, marginTop:2}
+			{object: controls4, marginTop:2, maxWidth: 90},
+			{object: content4},
+			{object: footer4,  maxWidth: 90},
 			], 2, "#3E303B", true, null, stage);
 
 

@@ -34,7 +34,7 @@ var height = 768;
 var color = "#3E303B"; // ZIM colors like green, blue, pink, faint, clear, etc.
 var outerColor = dark; // any HTML colors like "violet", "#333", etc. are fine to use
 var path = "assets/"
-var assets = ["logo.png", "page2-header.png","bg-test.jpg"]
+var assets = ["logo.png", "page2-header.png","bg1.jpg", "bg2.jpg","bg3.jpg","bg4.jpg","bg5.jpg","bg6.jpg","bg7.jpg","bg8.jpg"]
 //var frame = new Frame(scaling, width, height, color, outerColor);
 var frame = new Frame(scaling, width, height, color, outerColor, assets, path);
 
@@ -48,7 +48,8 @@ frame.on("ready", function() {
     const m = app.makeModel();
     const v = app.makeView(m, stage);
     const c = app.makeController(m, v, stage);
-    
+	
+
     stage.update(); // this is needed to show any changes
 
 }); // end of ready
