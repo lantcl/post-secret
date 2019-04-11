@@ -1,8 +1,6 @@
 var app = function(app){  //module pattern
 	app.makeView = function(m, stage){
 		const v = {};
-		
-		var labelColors = ["#91193D","#788970","#64163A","#47163A","#301B2D"];
 
 		const manager = v.manager = new Manager();
 
@@ -28,23 +26,11 @@ var app = function(app){  //module pattern
 			}
 		}
 		
-		//let imgs = ["bg1.jpg","bg2.jpg","bg3.jpg","bg4.jpg","bg5.jpg"];
-		// let imgs = ["bg1.jpg","bg2.jpg"];
-		// frame.asset("bg2.jpg").sca(.2).alp(.7).addTo(page4);
-		// frame.asset("bg1.jpg").sca(.2).alp(.7).addTo(page4);
-
-	 // 	function changeBackground(page){
-	 // 		// bg.removeFrom();
-	 // 		let currentbg = imgs[rand(imgs.length-1)];
-	 // 		frame.asset(currentbg).top();
-	 // 		stage.update();
-	 // 	}
-		
 		////////////PAGE 1///////
 		const page1 = v.page1 = new Container(stageW, stageH);
 		
 		let header = new Container().addTo(page1);
-		// v.page1.logo =  new Label(m.title).addTo(header);
+
 		v.page1.logo = frame.asset("logo.png").addTo(header);
 		
 		let content = new Container(300,300).addTo(page1);
@@ -115,7 +101,6 @@ var app = function(app){  //module pattern
 		
 		var bubbleBox = v.page3.bubbleSecret = new Rectangle(100, 170, "white").centerReg(content3).mov(-60);
 		var ransomBox = v.page3.ransomSecret = new Rectangle(100, 170, "white").centerReg(content3).mov(60);
-		//var bg = frame.asset("bg-test.jpg").centerReg(page3).sca(.2);
 		
 		let footer3 =  new Container(300,100).addTo(page3);
 		let home = v.page3.home = new Button({
@@ -141,7 +126,7 @@ var app = function(app){  //module pattern
 		
 		let content4 = new Container(300,300).addTo(page4);
 
-		let imgs1 = ["bg1.jpg","bg2.jpg","bg3.jpg","bg4.jpg"];
+		let imgs1 = ["bg3.jpg","bg4.jpg","bg5.jpg","bg7.jpg"];
 		let bgseries1 = v.bgseries1 = series(imgs1);
 
 		for(var i =0; i<imgs1.length; i++){
@@ -166,15 +151,15 @@ var app = function(app){  //module pattern
 			color: white,
 			backgroundColor: "#91193D"
 		}).addTo(instructions4).mov(null, 60);
-
-
-		var save = new Label({
+		
+		let save = new Label({
 		   text:"save",
 		   size:20,
 		   font: "courier",
 		   color: "white",
 		});
-		var background = new Label({
+		
+		let background = new Label({
 		   text:"background",
 		   size:20,
 		   font: "courier",
@@ -220,9 +205,9 @@ var app = function(app){  //module pattern
 	        text:"", 
 	        size:20,
 	        align: "center",
-	        backgroundColor:"ghostwhite",
+	        backgroundColor:"powderblue",
 	        corner: 10,
-	        color: "#91193D"
+	        color: "white"
 	    });
 
 		var speechBubble1 = v.speechBubble1 = new Label(bubbleProps).center(content4).mov(null, -50);
@@ -232,13 +217,14 @@ var app = function(app){  //module pattern
 		var speechBubble3 = v.speechBubble3 = new Label(bubbleProps).center(content4).mov(null, 50);
 
 		/////keyboard///////
-		var keyboard1 = v.keyboard1 = new Keyboard({
+		var keyboard1 = v.page4.keyboard = new Keyboard({
         	backgroundColor:"#91193D",
         	corner:0,
         	shadowColor: -1,
         	place: false,
        		labels:[speechBubble1,speechBubble2, speechBubble3]
     	});
+
 
 
 		const layout4 = new Layout(page4, [
@@ -257,7 +243,7 @@ var app = function(app){  //module pattern
 		const page5 = v.page5 = new Container(stageW, stageH);
 		
 		const bgContainer2 = new Container(stageW, stageH).addTo(page5);
-		let imgs2 = ["bg5.jpg","bg6.jpg","bg7.jpg","bg8.jpg"];
+		let imgs2 = ["bg2.jpg","bg6.jpg","bg1.jpg","bg8.jpg"];
 		let bgseries2 = v.bgseries2 = series(imgs2);
 
 		for(var i =0; i<imgs2.length; i++){
@@ -269,7 +255,7 @@ var app = function(app){  //module pattern
 		
 
 
-		let instructions5 = new Container().addTo(footer5);
+		let instructions5 = v.instructions5 = new Container().addTo(footer5);
 		
 		new Label({
 			text: "type a message",
@@ -285,20 +271,16 @@ var app = function(app){  //module pattern
 			backgroundColor: "#91193D"
 		}).addTo(instructions5).mov(null, 60);
 
-		var keyboard2 = v.keyboard2 = new Keyboard({
+		var keyboard2 = v.page5.keyboard = new Keyboard({
         	backgroundColor:"#91193D",
         	corner:0,
         	shadowColor: -1,
         	place: false,
     	});
 		
-
-		// closeButton = v.page5.close = new Button({
-		// 		backgroundColor: "#91193D",
-		// 		rollBackgroundColor:"#47163A",
-		// 		icon: pizzazz.makeIcon("close", "white").sca(.5),
-		// 		rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
-		// 	}).addTo(header5).pos(0,0,true);
+		keyboard2.on("keydown", function(e) {
+   			zog(e.letter);
+		});
 		
 		let controlsp5 = v.page5.controls = new Tabs({
 			tabs:[
@@ -323,7 +305,7 @@ var app = function(app){  //module pattern
 			]
 		}).addTo(controls5);
     	
-    	var letterBox = new Container().addTo(content5);
+    	var letterBox = v.page5.letterbox = new Container().addTo(content5);
 
   //   	function createLetter(letter){
   //       label = new Label({
