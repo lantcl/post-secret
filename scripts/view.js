@@ -137,50 +137,36 @@ var app = function(app){  //module pattern
 		////////////PAGE 4/////// bubble secret
 		
 		const page4 = v.page4 = new Container(stageW, stageH);
-		const bgContainer = new Container(stageW, stageH).addTo(page4);
+		const bgContainer1 = new Container(stageW, stageH).addTo(page4);
 		
 		let content4 = new Container(300,300).addTo(page4);
-		
-		// bg.addTo(page4);
-		let imgs = ["bg1.jpg","bg2.jpg","bg3.jpg","bg4.jpg","bg5.jpg"];
-		let bgseries = series(imgs);
 
-		for(var i =0; i<imgs.length; i++){
-			frame.asset(imgs[i]).sca(.2).alp(1).centerReg(bgContainer);
+		let imgs1 = ["bg1.jpg","bg2.jpg","bg3.jpg","bg4.jpg"];
+		let bgseries1 = v.bgseries1 = series(imgs1);
+
+		for(var i =0; i<imgs1.length; i++){
+			frame.asset(imgs1[i]).sca(.2).alp(1).centerReg(bgContainer1);
 		}
-
-	 	function changeBackground(page){
-	 		// bg.removeFrom();
-	 		let currentbg = bgseries();
-	 		zog(currentbg);
-	 		frame.asset(currentbg).top();
-	 		stage.update();
-	 	}
-		
 
 		let footer4 = new Container().addTo(page4);
 		let controls4 = new Container().addTo(page4);
 
-		let instruction21 = new Label({
+		let instructions4 = v.instructions4 = new Container().addTo(footer4);
+
+		new Label({
 			text: "type a message",
 			font: "courier",
 			color: white,
 			backgroundColor: "#91193D"
-		}).addTo(footer4);
+		}).addTo(instructions4);
 
-		let instruction2 = new Label({
+		new Label({
 			text: "click a bubble to type in it",
 			font: "courier",
 			color: white,
 			backgroundColor: "#91193D"
-		}).addTo(footer4).mov(null, 60);
-		
-		// let closeButton = v.page4.close = new Button({
-		// 		backgroundColor: "#91193D",
-		// 		rollBackgroundColor:"#47163A",
-		// 		icon: pizzazz.makeIcon("close", "white").sca(.5),
-		// 		rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
-		// 	}).addTo(controls4);
+		}).addTo(instructions4).mov(null, 60);
+
 
 		var save = new Label({
 		   text:"save",
@@ -196,7 +182,7 @@ var app = function(app){  //module pattern
 		});
 		
 
-		let controls = v.controls = new Tabs({
+		let controlsp4 = v.page4.controls = new Tabs({
 			tabs:[
 			new Button({
 				label: background,
@@ -219,69 +205,40 @@ var app = function(app){  //module pattern
 			]
 		}).addTo(controls4);
 
-		controls.on("mousedown", function(){
-					changeBackground(page4);
-				});		
     	
     	let bubbleimg = new Rectangle({
     		color:"white",
-    		corner: 25,
+    		corner: 20,
     		width: 200, 
     		height:200
     		}).centerReg(content4);
+    	new Triangle(20, 40, 40, "white").rot(180).center(bubbleimg).mov(null, 118);
 
 		//speech bubbles//////
-		var speechBubble1 = new Label({
-        	text:"", 
-        	backgroundColor:white,
-        	corner: 10,
-        	size:20,
-        	align: "center",
-        	color: "#91193D"
-	    }).center(content4).mov(null, -50);
 
-	    var speechBubble2 = new Label({
+		let bubbleProps = ({
 	        text:"", 
 	        size:20,
 	        align: "center",
-	        backgroundColor:white,
+	        backgroundColor:"ghostwhite",
 	        corner: 10,
 	        color: "#91193D"
-	    }).center(content4);
+	    });
+
+		var speechBubble1 = v.speechBubble1 = new Label(bubbleProps).center(content4).mov(null, -50);
+
+	    var speechBubble2 = v.speechBubble2 = new Label(bubbleProps).center(content4);
 		
-		var speechBubble3 = new Label({
-	        text:"", 
-	        size:20,
-	        align: "center",
-	        backgroundColor:white,
-	        corner: 10,
-	        color: "#91193D"
-	    }).center(content4).mov(null, -50);
+		var speechBubble3 = v.speechBubble3 = new Label(bubbleProps).center(content4).mov(null, 50);
 
 		/////keyboard///////
-		var keyboard = new Keyboard({
+		var keyboard1 = v.keyboard1 = new Keyboard({
         	backgroundColor:"#91193D",
         	corner:0,
         	shadowColor: -1,
         	place: false,
        		labels:[speechBubble1,speechBubble2, speechBubble3]
     	});
-
-    	var text1Event = speechBubble1.on("mousedown", activate);
-	    var text2Event = speechBubble2.on("mousedown", activate);
-	    var text3Event = speechBubble3.on("mousedown", activate);
-	    
-	    function activate(e) {
-	        keyboard.show();
-	        speechBubble1.off("mousedown", text1Event);
-	        speechBubble2.off("mousedown", text2Event);
-	        speechBubble3.off("mousedown", text3Event);
-	    }
-	    keyboard.on("close", function() {
-	        speechBubble1.on("mousedown", text1Event);
-	        speechBubble2.on("mousedown", text2Event);
-	        speechBubble3.on("mousedown", text3Event);
-	    });
 
 
 		const layout4 = new Layout(page4, [
@@ -295,81 +252,123 @@ var app = function(app){  //module pattern
 
 		//////////PAGE 5/////// ransom secret
 		//ransom//////
+		
 
 		const page5 = v.page5 = new Container(stageW, stageH);
 		
-		let header5 = new Container().addTo(page5);
+		const bgContainer2 = new Container(stageW, stageH).addTo(page5);
+		let imgs2 = ["bg5.jpg","bg6.jpg","bg7.jpg","bg8.jpg"];
+		let bgseries2 = v.bgseries2 = series(imgs2);
+
+		for(var i =0; i<imgs2.length; i++){
+			frame.asset(imgs2[i]).sca(.2).alp(1).centerReg(bgContainer2);
+		}
 		let controls5 = new Container().addTo(page5);
+		let content5 = new Container(300,300).addTo(page5);
+		let footer5 = new Container().addTo(page5);
 		
-		let instruction31 = new Label({
+
+
+		let instructions5 = new Container().addTo(footer5);
+		
+		new Label({
 			text: "type a message",
 			font: "courier",
-			color: white
-		}).addTo(header5).alp(.3);
+			color: white,
+			backgroundColor: "#91193D"
+		}).addTo(instructions5);
 
-		let instruction3 = new Label({
+		new Label({
 			text: "use the space bar to fix gaps",
 			font: "courier",
-			color: white
-		}).addTo(header5).mov(null, 60).alp(.3);
+			color: white,
+			backgroundColor: "#91193D"
+		}).addTo(instructions5).mov(null, 60);
 
-		controls.clone().addTo(controls5);
+		var keyboard2 = v.keyboard2 = new Keyboard({
+        	backgroundColor:"#91193D",
+        	corner:0,
+        	shadowColor: -1,
+        	place: false,
+    	});
+		
 
-		closeButton = v.page5.close = new Button({
+		// closeButton = v.page5.close = new Button({
+		// 		backgroundColor: "#91193D",
+		// 		rollBackgroundColor:"#47163A",
+		// 		icon: pizzazz.makeIcon("close", "white").sca(.5),
+		// 		rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
+		// 	}).addTo(header5).pos(0,0,true);
+		
+		let controlsp5 = v.page5.controls = new Tabs({
+			tabs:[
+			new Button({
+				label: background,
+				corner: 2,
+				width: 150,
+				height: 50,
+				}),
+			new Button({
+				label: save,
+				corner: 2,
+				width: 150,
+				height: 50,
+				}),
+			new Button({
 				backgroundColor: "#91193D",
 				rollBackgroundColor:"#47163A",
 				icon: pizzazz.makeIcon("close", "white").sca(.5),
 				rollIcon: pizzazz.makeIcon("close", "white").sca(.6)
-			}).addTo(header5).pos(0,0,true);
-		
-		let content5 = new Container(300,300).addTo(page5);
-
+				})
+			]
+		}).addTo(controls5);
+    	
     	var letterBox = new Container().addTo(content5);
 
-    	function createLetter(letter){
-        label = new Label({
-            text: letter,
-            size: rand(12, 20),
-            color: "white",
-            font: "courier",
-            backgroundColor: labelColors[rand(labelColors.length-1)],
-            fontOptions:"italic bold"
-        }).centerReg(letterBox).rot(rand(-7, 7));
-    	}
+  //   	function createLetter(letter){
+  //       label = new Label({
+  //           text: letter,
+  //           size: rand(12, 20),
+  //           color: "white",
+  //           font: "courier",
+  //           backgroundColor: labelColors[rand(labelColors.length-1)],
+  //           fontOptions:"italic bold"
+  //       }).centerReg(letterBox).rot(rand(-7, 7));
+  //   	}
 		
-		frame.on("keydown", function(e){
-        if (e.keyCode == 8 || e.keyCode == 46){
-            letterBox.removeChildAt(letterBox.numChildren -1);
-            stage.update();
-        }
-        else if (e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 20){
-            // zog("do NOTHING");
-        }
-        else if (e.keyCode == 32){
-            new Rectangle(20,20).alp(0).addTo(letterBox);
-            stage.update();
-        } else {
+		// frame.on("keydown", function(e){
+  //       if (e.keyCode == 8 || e.keyCode == 46){
+  //           letterBox.removeChildAt(letterBox.numChildren -1);
+  //           stage.update();
+  //       }
+  //       else if (e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 20){
+  //           // zog("do NOTHING");
+  //       }
+  //       else if (e.keyCode == 32){
+  //           new Rectangle(20,20).alp(0).addTo(letterBox);
+  //           stage.update();
+  //       } else {
              
-            createLetter(event.key);
+  //           createLetter(event.key);
 
-            if (letterBox.numChildren >= 20){
-                label.pos(30*(letterBox.numChildren-19),100);
-                stage.update();
-            } else if (letterBox.numChildren >= 10){
-                label.pos(30*(letterBox.numChildren-10),50);
-                stage.update();
-            } else {
-                label.loc(30*letterBox.numChildren);
-                stage.update();
-            }
+  //           if (letterBox.numChildren >= 20){
+  //               label.pos(30*(letterBox.numChildren-19),100);
+  //               stage.update();
+  //           } else if (letterBox.numChildren >= 10){
+  //               label.pos(30*(letterBox.numChildren-10),50);
+  //               stage.update();
+  //           } else {
+  //               label.loc(30*letterBox.numChildren);
+  //               stage.update();
+  //           }
         
-        }
-    	});
+  //       }
+  //   	});
 
 		layout5 = new Layout(page5, [
-			{object: header5, marginTop:5, maxWidth: 90,},
-			{object: controls5, maxWidth: 90},
-			{object: content5, marginTop:2,  maxWidth: 90},
+			{object: controls5, marginTop:2, maxWidth: 90},
+			{object: content5},
+			{object: footer5,  maxWidth: 90},
 			], 2, "#3E303B", true, null, stage);
 
 		manager.add(layout5);
