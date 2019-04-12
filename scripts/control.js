@@ -5,13 +5,32 @@ var app = function(app){  //module pattern
 
 		const c ={};
 
-		
+		//change background
 		function changeBackground(seriesname){
 	 		let currentbg = seriesname;
 	 		frame.asset(currentbg).top();
 	 		stage.update();
 	 	}
+
+	 	//save image
+		function saveImage1(){
+			v.instructions4.alp(0);
+	 		v.page4.controls.alp(0);
+	 		cacheStage();
+	 	}
 		
+		function saveImage2(){
+			v.instructions5.alp(0);
+	 		v.page5.controls.alp(0);
+	 		cacheStage();
+		}
+		
+		function cacheStage(){
+			stage.cache();
+			var bitmap = new Bitmap(stage.cacheCanvas);
+			stage.uncache();
+		}
+
 	 	//////////////KEYBOARDS///////////////////
 
 		function activate1() {
@@ -61,15 +80,15 @@ var app = function(app){  //module pattern
     	}
 		
 		//v.page5.keyboard
-		frame.on("keydown", function(e){
-        if (e.keyCode == 8 || e.keyCode == 46){
+		v.page5.keyboard.on("keydown", function(e){
+        if (e.letter == 8 || e.letter == 46){
             v.page5.letterBox.removeChildAt(v.page5.letterBox.numChildren -1);
             stage.update();
         }
-        else if (e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 20){
+        else if (e.letter == 16 || e.letter == 17 || e.letter == 20){
             // zog("do NOTHING");
         }
-        else if (e.keyCode == 32){
+        else if (e.letter == 32){
             new Rectangle(20,20).alp(0).addTo(v.page5.letterBox);
             stage.update();
         } else {
@@ -87,20 +106,30 @@ var app = function(app){  //module pattern
                 stage.update();
             }
         
+
         }
     	});
 
 		const hs = new HotSpots([  
+			//secret style choice
 			{page: v.page3, rect: v.page3.bubbleSecret,call:()=>{v.pages.go(v.page4, "left");}},
 			{page: v.page3, rect: v.page3.ransomSecret,call:()=>{v.pages.go(v.page5, "right");}},
-			{page: v.page1, rect: v.page1.button, call:()=>{v.pages.go(v.page2, "down");}},
+			//back to home
 			{page: v.page3, rect: v.page3.home, call:()=>{v.pages.go(v.page1, "up");}},
+			//Enter site
+			{page: v.page1, rect: v.page1.button, call:()=>{v.pages.go(v.page2, "down");}},
+			//mid navigation
 			{page: v.page2, rect: v.page2.tabs.buttons[0], call:()=>{v.pages.go(v.page1, "up");}},
 			{page: v.page2, rect: v.page2.tabs.buttons[1], call:()=>{v.pages.go(v.page3, "down");}},
+			//back to secret style choice
 			{page: v.page4, rect: v.page4.controls.buttons[2], call:()=>{v.pages.go(v.page3, "right");}},
 			{page: v.page5, rect: v.page5.controls.buttons[2], call:()=>{v.pages.go(v.page3, "left");}},
+			//background changes
 			{page: v.page4, rect: v.page4.controls.buttons[0], call:()=>{changeBackground(v.bgseries1());}},
-			{page: v.page5, rect: v.page5.controls.buttons[0], call:()=>{changeBackground(v.bgseries2());}}
+			{page: v.page5, rect: v.page5.controls.buttons[0], call:()=>{changeBackground(v.bgseries2());}},
+			//saves images
+			{page: v.page4, rect: v.page4.controls.buttons[1], call:()=>{saveImage1();}},
+			{page: v.page5, rect: v.page5.controls.buttons[1], call:()=>{saveImage2();}}
 		]);
 
 

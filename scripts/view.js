@@ -130,7 +130,8 @@ var app = function(app){  //module pattern
 		let bgseries1 = v.bgseries1 = series(imgs1);
 
 		for(var i =0; i<imgs1.length; i++){
-			frame.asset(imgs1[i]).sca(.2).alp(1).centerReg(bgContainer1);
+			var f = frame.asset(imgs1[i]).alp(1).addTo(bgContainer1);
+			f.width = stageW;
 		}
 
 		let footer4 = new Container().addTo(page4);
@@ -152,14 +153,14 @@ var app = function(app){  //module pattern
 			backgroundColor: "#91193D"
 		}).addTo(instructions4).mov(null, 60);
 		
-		let save = new Label({
+		let saveLabel = ({
 		   text:"save",
 		   size:20,
 		   font: "courier",
 		   color: "white",
 		});
 		
-		let background = new Label({
+		let backgroundLabel =({
 		   text:"background",
 		   size:20,
 		   font: "courier",
@@ -170,13 +171,13 @@ var app = function(app){  //module pattern
 		let controlsp4 = v.page4.controls = new Tabs({
 			tabs:[
 			new Button({
-				label: background,
+				label: new Label(backgroundLabel),
 				corner: 2,
 				width: 150,
 				height: 50,
 				}),
 			new Button({
-				label: save,
+				label: new Label(saveLabel),
 				corner: 2,
 				width: 150,
 				height: 50,
@@ -247,7 +248,8 @@ var app = function(app){  //module pattern
 		let bgseries2 = v.bgseries2 = series(imgs2);
 
 		for(var i =0; i<imgs2.length; i++){
-			frame.asset(imgs2[i]).sca(.2).alp(1).centerReg(bgContainer2);
+			var f = frame.asset(imgs2[i]).alp(1).centerReg(bgContainer2);
+			f.width = stageW;
 		}
 		let controls5 = new Container().addTo(page5);
 		let content5 = new Container(300,300).addTo(page5);
@@ -285,13 +287,13 @@ var app = function(app){  //module pattern
 		let controlsp5 = v.page5.controls = new Tabs({
 			tabs:[
 			new Button({
-				label: background,
+				label: new Label(backgroundLabel),
 				corner: 2,
 				width: 150,
 				height: 50,
 				}),
 			new Button({
-				label: save,
+				label: new Label(saveLabel),
 				corner: 2,
 				width: 150,
 				height: 50,
