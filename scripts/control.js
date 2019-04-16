@@ -16,19 +16,39 @@ var app = function(app){  //module pattern
 		function saveImage1(){
 			v.instructions4.alp(0);
 	 		v.page4.controls.alp(0);
+	 		v.page4.keyboard.hide();
 	 		cacheStage();
+	 		v.instructions4.alp(1);
+	 		v.page4.controls.alp(1);
+	 		v.page4.keyboard.show();
 	 	}
 		
 		function saveImage2(){
 			v.instructions5.alp(0);
 	 		v.page5.controls.alp(0);
+	 		v.page5.keyboard.hide();
+	 		v.page4.keyboard.hidePlace()
 	 		cacheStage();
+	 		v.instructions5.alp(1);
+	 		v.page5.controls.alp(1);
+	 		v.page5.keyboard.show();
 		}
 		
+		// function cacheStage(){
+		// 	stage.cache();
+		// 	var bitmap = new Bitmap(stage.cacheCanvas);
+		// 	stage.uncache();
+		// }
+
 		function cacheStage(){
-			stage.cache();
-			var bitmap = new Bitmap(stage.cacheCanvas);
-			stage.uncache();
+			var loader = new Loader();
+			var img = loader.save({
+				content: stage, 
+				type:"jpeg"
+			});
+			loader.dispose();
+			v.instructions4.alp(1);
+	 		v.page4.controls.alp(1);
 		}
 
 	 	//////////////KEYBOARDS///////////////////
