@@ -52,7 +52,7 @@ var app = function(app){  //module pattern
 		}
 
 	 	//////////////KEYBOARDS///////////////////
-
+	 	// page 4
 		function activate1() {
 	        v.page4.keyboard.show();
 	        v.speechBubble1.off("mousedown", text1Event);
@@ -70,12 +70,11 @@ var app = function(app){  //module pattern
 	        v.speechBubble1.on("mousedown", text1Event);
 	        v.speechBubble2.on("mousedown", text2Event);
 	        v.speechBubble3.on("mousedown", text3Event);
-	        v.instructions4.alp(1);
+	        v.instructions4.alp(0);
 	    });
 
 	    v.page5.keyboard.on("close", function() {
 	        v.instructions5.alp(1);
-	        createLetter("e")
 	    });
 
 	    //speech bubble
@@ -96,36 +95,35 @@ var app = function(app){  //module pattern
 	            font: "courier",
 	            backgroundColor: labelColors[rand(labelColors.length-1)],
 	            fontOptions:"italic bold"
-	        }).centerReg(v.page5.letterBox).rot(rand(-7, 7));
+	        }).centerReg(v.page5.letterbox).rot(rand(-7, 7));
     	}
 		
 		//v.page5.keyboard
 		v.page5.keyboard.on("keydown", function(e){
-        if (e.letter == 8 || e.letter == 46){
-            v.page5.letterBox.removeChildAt(v.page5.letterBox.numChildren -1);
+        if (e.letter == "del"){
+            v.page5.letterbox.removeChildAt(v.page5.letterbox.numChildren -1);
             stage.update();
         }
         else if (e.letter == 16 || e.letter == 17 || e.letter == 20){
             // zog("do NOTHING");
         }
         else if (e.letter == 32){
-            new Rectangle(20,20).alp(0).addTo(v.page5.letterBox);
+            new Rectangle(20,20).alp(0).addTo(v.page5.letterbox);
             stage.update();
         } else {
              
-            createLetter(event.key);
+            createLetter(e.letter);
 
-            if (v.page5.letterBox.numChildren >= 20){
-                label.pos(30*(v.page5.letterBox.numChildren-19),100);
+            if (v.page5.letterbox.numChildren >= 20){
+                label.pos(30*(v.page5.letterbox.numChildren-19),100);
                 stage.update();
-            } else if (v.page5.letterBox.numChildren >= 10){
-                label.pos(30*(v.page5.letterBox.numChildren-10),50);
+            } else if (v.page5.letterbox.numChildren >= 10){
+                label.pos(30*(v.page5.letterbox.numChildren-10),50);
                 stage.update();
             } else {
-                label.loc(30*v.page5.letterBox.numChildren);
+                label.loc(30*v.page5.letterbox.numChildren);
                 stage.update();
             }
-        
 
         }
     	});

@@ -273,16 +273,16 @@ var app = function(app){  //module pattern
 			backgroundColor: "#91193D"
 		}).addTo(instructions5).mov(null, 60);
 
+		var offStageText = new Label({text:""}).center(content5).alp(0);
+		
 		var keyboard2 = v.page5.keyboard = new Keyboard({
         	backgroundColor:"#91193D",
         	corner:0,
         	shadowColor: -1,
         	place: false,
+        	labels: [offStageText]
     	});
-		
-		keyboard2.on("keydown", function(e) {
-   			zog(e.letter);
-		});
+	
 		
 		let controlsp5 = v.page5.controls = new Tabs({
 			tabs:[
