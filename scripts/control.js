@@ -34,12 +34,6 @@ var app = function(app){  //module pattern
 	 		v.page5.keyboard.show();
 		}
 		
-		// function cacheStage(){
-		// 	stage.cache();
-		// 	var bitmap = new Bitmap(stage.cacheCanvas);
-		// 	stage.uncache();
-		// }
-
 		function cacheStage(){
 			var loader = new Loader();
 			var img = loader.save({
@@ -104,21 +98,21 @@ var app = function(app){  //module pattern
             v.page5.letterbox.removeChildAt(v.page5.letterbox.numChildren -1);
             stage.update();
         }
-        else if (e.letter == 16 || e.letter == 17 || e.letter == 20){
-            // zog("do NOTHING");
-        }
-        else if (e.letter == 32){
+        // else if (e.letter == 16 || e.letter == 17 || e.letter == 20){
+        //     // zog("do NOTHING");
+        // }
+        else if (e.letter == " "){
             new Rectangle(20,20).alp(0).addTo(v.page5.letterbox);
             stage.update();
         } else {
              
             createLetter(e.letter);
-
-            if (v.page5.letterbox.numChildren >= 20){
-                label.pos(30*(v.page5.letterbox.numChildren-19),100);
+            zog(e.letter);
+            if (v.page5.letterbox.numChildren >= 19){
+                label.pos(30*(v.page5.letterbox.numChildren-18.5),140);
                 stage.update();
             } else if (v.page5.letterbox.numChildren >= 10){
-                label.pos(30*(v.page5.letterbox.numChildren-10),50);
+                label.pos(30*(v.page5.letterbox.numChildren-9.5),70);
                 stage.update();
             } else {
                 label.loc(30*v.page5.letterbox.numChildren);

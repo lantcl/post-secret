@@ -99,8 +99,13 @@ var app = function(app){  //module pattern
 		
 		let content3 = new Container(300,300).addTo(page3);
 		
-		var bubbleBox = v.page3.bubbleSecret = new Rectangle(100, 170, "white").centerReg(content3).mov(-60);
-		var ransomBox = v.page3.ransomSecret = new Rectangle(100, 170, "white").centerReg(content3).mov(60);
+		var bubbleBox = v.page3.bubbleSecret = frame.asset("option1.jpg").sca(.3).centerReg(content3).mov(-60);
+		new Label({text: "bubble style", font: "courier",
+			color: "#788970"}).sca(.4).centerReg(content3).mov(-60, 120);
+		
+		var ransomBox = v.page3.ransomSecret = frame.asset("option2.jpg").sca(.3).centerReg(content3).mov(60);
+		new Label({text: "ransom style", font: "courier",
+			color: "#788970"}).sca(.4).centerReg(content3).mov(60, 120);
 		
 		let footer3 =  new Container(300,100).addTo(page3);
 		let home = v.page3.home = new Button({
@@ -309,45 +314,6 @@ var app = function(app){  //module pattern
     	
     	var letterBox = v.page5.letterbox = new Container().addTo(content5);
 
-  //   	function createLetter(letter){
-  //       label = new Label({
-  //           text: letter,
-  //           size: rand(12, 20),
-  //           color: "white",
-  //           font: "courier",
-  //           backgroundColor: labelColors[rand(labelColors.length-1)],
-  //           fontOptions:"italic bold"
-  //       }).centerReg(letterBox).rot(rand(-7, 7));
-  //   	}
-		
-		// frame.on("keydown", function(e){
-  //       if (e.keyCode == 8 || e.keyCode == 46){
-  //           letterBox.removeChildAt(letterBox.numChildren -1);
-  //           stage.update();
-  //       }
-  //       else if (e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 20){
-  //           // zog("do NOTHING");
-  //       }
-  //       else if (e.keyCode == 32){
-  //           new Rectangle(20,20).alp(0).addTo(letterBox);
-  //           stage.update();
-  //       } else {
-             
-  //           createLetter(event.key);
-
-  //           if (letterBox.numChildren >= 20){
-  //               label.pos(30*(letterBox.numChildren-19),100);
-  //               stage.update();
-  //           } else if (letterBox.numChildren >= 10){
-  //               label.pos(30*(letterBox.numChildren-10),50);
-  //               stage.update();
-  //           } else {
-  //               label.loc(30*letterBox.numChildren);
-  //               stage.update();
-  //           }
-        
-  //       }
-  //   	});
 
 		layout5 = new Layout(page5, [
 			{object: controls5, marginTop:2, maxWidth: 90},
